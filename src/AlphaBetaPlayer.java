@@ -1,5 +1,4 @@
-
-public class MinimaxPlayer implements Player {
+public class AlphaBetaPlayer implements Player {
 	int id; 
 	int opponent_id;
     int cols; 
@@ -38,7 +37,7 @@ public class MinimaxPlayer implements Player {
         	for (int col = 0; col < 7; col++) {
     			if(board.isValidMove(col)) {
     				board.move(col, id);
-    				score = minimax(board, maxDepth-1, false, arb);
+    				score = minimax(board, maxDepth-1, false, -1000, 1000, arb);
     				if (score > bestScore) {
     					bestScore = score;
     					move = col;
@@ -52,7 +51,7 @@ public class MinimaxPlayer implements Player {
 
     }
     
-    public int minimax(Connect4Board board, int depth, boolean isMaximizing, Arbitrator arb) {
+    public int minimax(Connect4Board board, int depth, boolean isMaximizing, int alpha, int beta, Arbitrator arb) {
     	
 //    	if depth = 0 or there's no moves left or time is up
 //    			return the heuristic value of node 
@@ -73,7 +72,9 @@ public class MinimaxPlayer implements Player {
     		for (int col = 0; col < 7; col++) {
     			if(board.isValidMove(col)) {
     				board.move(col, id);
-    				bestScore = Math.max(bestScore, minimax(board, depth-1, false, arb));
+    				bestScore = Math.max(bestScore, minimax(board, depth-1, false, alpha, beta, arb));
+    				alpha = Math.max(alpha, bestScore);
+    				if (beta <= alpha) break;
     				board.unmove(col,id);
     			}
     		}
@@ -93,7 +94,9 @@ public class MinimaxPlayer implements Player {
     		for (int col = 0; col < 7; col++) {
     			if(board.isValidMove(col)) {
     				board.move(col, opponent_id);
-    				bestScore = Math.min(bestScore, minimax(board, depth-1, true, arb));
+    				bestScore = Math.min(bestScore, minimax(board, depth-1, true, alpha, beta, arb));
+    				beta = Math.min(beta, bestScore);
+    				if (beta <= alpha) break;
     				board.unmove(col,opponent_id);
     			}
     		}
