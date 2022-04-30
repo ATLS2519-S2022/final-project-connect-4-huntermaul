@@ -21,7 +21,8 @@ public class MinimaxPlayer implements Player {
     	this.cols = cols;
     	opponent_id = 3-id;
     }
-
+    
+    //Calculates and sets best move using minimax algorithm
     @Override
     public void calcMove(
         Connect4Board board, int oppMoveCol, Arbitrator arb) 
@@ -58,6 +59,7 @@ public class MinimaxPlayer implements Player {
 
     }
     
+    //Search algorithm used to determine best possible move
     public int minimax(Connect4Board board, int depth, boolean isMaximizing, Arbitrator arb) {
     	
 //    	if depth = 0 or there's no moves left or time is up
