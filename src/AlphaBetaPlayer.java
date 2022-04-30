@@ -1,3 +1,10 @@
+/**
+ * A Connect-4 player that implements a minimax algorithm that is optimized via alpha beta pruning
+ * to determine the best move possible in the time alloded.
+ * 
+ * @author Hunter Maul
+ *
+ */
 public class AlphaBetaPlayer implements Player {
 	int id; 
 	int opponent_id;
@@ -5,7 +12,7 @@ public class AlphaBetaPlayer implements Player {
     
     @Override
     public String name() {
-        return "Minnie";
+        return "Big Dog";
     }
 
     @Override
@@ -15,6 +22,7 @@ public class AlphaBetaPlayer implements Player {
     	opponent_id = 3-id;
     }
 
+    //Calculates and sets best move using minimax algorithm
     @Override
     public void calcMove(
         Connect4Board board, int oppMoveCol, Arbitrator arb) 
@@ -50,7 +58,8 @@ public class AlphaBetaPlayer implements Player {
         }        
 
     }
-    
+    //Search algorithm used to determine best possible move	
+    //Optimized with alpha-beta pruning
     public int minimax(Connect4Board board, int depth, boolean isMaximizing, int alpha, int beta, Arbitrator arb) {
     	
 //    	if depth = 0 or there's no moves left or time is up
@@ -73,9 +82,9 @@ public class AlphaBetaPlayer implements Player {
     			if(board.isValidMove(col)) {
     				board.move(col, id);
     				bestScore = Math.max(bestScore, minimax(board, depth-1, false, alpha, beta, arb));
+    				board.unmove(col,id);
     				alpha = Math.max(alpha, bestScore);
     				if (beta <= alpha) break;
-    				board.unmove(col,id);
     			}
     		}
     		return bestScore;
@@ -95,9 +104,9 @@ public class AlphaBetaPlayer implements Player {
     			if(board.isValidMove(col)) {
     				board.move(col, opponent_id);
     				bestScore = Math.min(bestScore, minimax(board, depth-1, true, alpha, beta, arb));
+    				board.unmove(col,opponent_id);
     				beta = Math.min(beta, bestScore);
     				if (beta <= alpha) break;
-    				board.unmove(col,opponent_id);
     			}
     		}
     		return bestScore;

@@ -1,4 +1,10 @@
-
+/**
+ * A Connect-4 player that implements a minimax algorithm 
+ * to determine the best move possible in the time alloded.
+ * 
+ * @author Hunter Maul
+ *
+ */
 public class MinimaxPlayer implements Player {
 	int id; 
 	int opponent_id;

@@ -1,11 +1,16 @@
-
+/**
+ * A Connect-4 player that chooses the best move that is immediately available.
+ * 
+ * @author Hunter Maul
+ *
+ */
 public class GreedyPlayer implements Player
 {
 	int id;
 	
 	@Override
     public String name() {
-        return "Dumbass";
+        return "Greedy Boyyy";
     }
 	
 	@Override
@@ -19,11 +24,10 @@ public class GreedyPlayer implements Player
 			throw new Error ("Complaint: The board is full!");
 		}
 		int maxScore = -1;
-		
 		for(int col = 0; col < 7; col++) {
 			if(board.isValidMove(col)) {
 				board.move(col, id);
-				
+				//If current move results in a higher score than maxScore setMove()
 				if(calcScore(board, id) > maxScore) {
 					arb.setMove(col);
 					maxScore = calcScore(board, id);
